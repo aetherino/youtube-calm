@@ -1,0 +1,303 @@
+/* Calm YouTube */
+
+#calmyt-overlay,
+#calmyt-toggle {
+  --calmyt-bg: #f7f5f0;
+  --calmyt-text: #2b2825;
+  --calmyt-muted: #9b958c;
+  --calmyt-faint: #c4beb4;
+  --calmyt-field: #fffefb;
+  --calmyt-border: #e6e1d8;
+  --calmyt-border-focus: #d9c3b4;
+  --calmyt-ring: rgba(201, 111, 91, 0.11);
+  --calmyt-accent: #c96f5b;
+  --calmyt-shadow: 0 1px 2px rgba(60, 45, 30, 0.04), 0 8px 28px -12px rgba(60, 45, 30, 0.12);
+  font-family: "Roboto", "Arial", system-ui, sans-serif;
+}
+
+/* Before YouTube has picked a theme, follow the system. Once the feed is visible
+   (calm off), the toggle sits on YouTube's own page, so it follows html[dark] only. */
+@media (prefers-color-scheme: dark) {
+  html:not([dark]):not([light]) #calmyt-overlay,
+  html[data-calmyt="on"]:not([dark]):not([light]) #calmyt-toggle {
+    --calmyt-bg: #121211;
+    --calmyt-text: #e8e4dd;
+    --calmyt-muted: #7c776f;
+    --calmyt-faint: #4a4641;
+    --calmyt-field: #1b1a19;
+    --calmyt-border: #2a2826;
+    --calmyt-border-focus: #4b3d35;
+    --calmyt-ring: rgba(233, 136, 108, 0.1);
+    --calmyt-accent: #e2876d;
+    --calmyt-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+  }
+}
+
+html[dark] #calmyt-overlay,
+html[dark] #calmyt-toggle {
+  --calmyt-bg: #121211;
+  --calmyt-text: #e8e4dd;
+  --calmyt-muted: #7c776f;
+  --calmyt-faint: #4a4641;
+  --calmyt-field: #1b1a19;
+  --calmyt-border: #2a2826;
+  --calmyt-border-focus: #4b3d35;
+  --calmyt-ring: rgba(233, 136, 108, 0.1);
+  --calmyt-accent: #e2876d;
+  --calmyt-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- hide the feed ---------- */
+
+html[data-calmyt="on"],
+html[data-calmyt="on"] body {
+  overflow: hidden !important;
+}
+
+html[data-calmyt="on"] ytd-app {
+  visibility: hidden !important;
+}
+
+/* Don't even render the grid, so thumbnails & previews never load. */
+html[data-calmyt="on"] ytd-browse[page-subtype="home"] #contents.ytd-rich-grid-renderer,
+html[data-calmyt="on"] ytd-browse[page-subtype="home"] #masthead-ad,
+html[data-calmyt="on"] ytd-browse[page-subtype="home"] ytd-rich-grid-renderer > #header {
+  display: none !important;
+}
+
+/* ---------- overlay ---------- */
+
+#calmyt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147482000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px 12vh;
+  box-sizing: border-box;
+  background: var(--calmyt-bg);
+  color: var(--calmyt-text);
+}
+
+html[data-calmyt="on"] #calmyt-overlay {
+  display: flex;
+  animation: calmyt-fade 0.45s ease-out both;
+}
+
+#calmyt-form {
+  width: 100%;
+  max-width: 560px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: calmyt-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#calmyt-form.calmyt-leaving {
+  opacity: 0.35;
+  transform: translateY(-4px);
+}
+
+#calmyt-form.calmyt-nudge .calmyt-field {
+  animation: calmyt-nudge 0.4s ease;
+}
+
+.calmyt-greeting {
+  margin: 0 0 22px;
+  font-family: "Iowan Old Style", "Charter", "Georgia", serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--calmyt-muted);
+  user-select: none;
+}
+
+.calmyt-field {
+  position: relative;
+  width: 100%;
+}
+
+.calmyt-loupe {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%);
+  fill: none;
+  stroke: var(--calmyt-faint);
+  stroke-width: 2;
+  stroke-linecap: round;
+  pointer-events: none;
+  transition: stroke 0.2s ease;
+}
+
+.calmyt-field:focus-within .calmyt-loupe {
+  stroke: var(--calmyt-muted);
+}
+
+#calmyt-q {
+  all: unset;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 54px;
+  padding: 0 24px 0 50px;
+  border-radius: 27px;
+  border: 1px solid var(--calmyt-border);
+  background: var(--calmyt-field);
+  color: var(--calmyt-text);
+  caret-color: var(--calmyt-accent);
+  font: 400 17px/54px "Roboto", "Arial", system-ui, sans-serif;
+  letter-spacing: 0.005em;
+  box-shadow: var(--calmyt-shadow);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#calmyt-q::placeholder {
+  color: var(--calmyt-faint);
+  opacity: 1;
+}
+
+#calmyt-q:focus {
+  border-color: var(--calmyt-border-focus);
+  box-shadow: var(--calmyt-shadow), 0 0 0 4px var(--calmyt-ring);
+}
+
+#calmyt-q::selection {
+  background: var(--calmyt-ring);
+}
+
+.calmyt-hint {
+  position: relative;
+  height: 16px;
+  margin: 16px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--calmyt-faint);
+  user-select: none;
+}
+
+.calmyt-hint > span {
+  position: absolute;
+  left: 50%;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Empty & unfocused: a gentle nudge. Typed something: how to go. */
+#calmyt-form:not(:focus-within):has(#calmyt-q:placeholder-shown) .calmyt-hint-idle,
+#calmyt-form:has(#calmyt-q:not(:placeholder-shown)) .calmyt-hint-ready {
+  opacity: 1;
+}
+
+.calmyt-hint kbd {
+  font: inherit;
+  padding: 1px 6px;
+  border: 1px solid var(--calmyt-border);
+  border-radius: 5px;
+  color: var(--calmyt-muted);
+}
+
+.calmyt-links {
+  display: flex;
+  gap: 22px;
+  margin-top: 30px;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+}
+
+.calmyt-links a {
+  color: var(--calmyt-faint);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.calmyt-links a:hover,
+.calmyt-links a:focus-visible {
+  color: var(--calmyt-text);
+  outline: none;
+}
+
+/* ---------- toggle ---------- */
+
+#calmyt-toggle {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2147482001;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 7px 13px 7px 11px;
+  border: 1px solid var(--calmyt-border);
+  border-radius: 999px;
+  background: var(--calmyt-field);
+  color: var(--calmyt-muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.55;
+  box-shadow: var(--calmyt-shadow);
+  transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+html[data-calmyt] #calmyt-toggle {
+  display: inline-flex;
+}
+
+#calmyt-toggle:hover,
+#calmyt-toggle:focus-visible {
+  opacity: 1;
+  color: var(--calmyt-text);
+  border-color: var(--calmyt-border-focus);
+  outline: none;
+}
+
+.calmyt-toggle-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid var(--calmyt-accent);
+  box-sizing: border-box;
+  transition: background 0.2s ease;
+}
+
+#calmyt-toggle[aria-pressed="true"] .calmyt-toggle-dot {
+  background: var(--calmyt-accent);
+}
+
+/* ---------- motion ---------- */
+
+@keyframes calmyt-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes calmyt-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes calmyt-nudge {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #calmyt-overlay,
+  #calmyt-form,
+  #calmyt-form.calmyt-nudge .calmyt-field {
+    animation: none !important;
+  }
+}

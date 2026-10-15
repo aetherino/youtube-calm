@@ -31,12 +31,16 @@ Only the home page is changed. Search results, videos and channels stay exactly 
 
 ## Install
 
-### Quick: temporary (lasts until Firefox restarts)
+**[⬇ Install Calm YouTube for Firefox](https://github.com/aetherino/youtube-calm/releases/latest/download/calm-youtube.xpi)**
+
+Open that link in Firefox, click **Allow** if Firefox asks about installing from this site, then click **Add**. The file is signed by Mozilla, so it stays installed after restarts.
+
+### From source: temporary (lasts until Firefox restarts)
 
 1. Open `about:debugging#/runtime/this-firefox`
 2. Click **Load Temporary Add-on…** and pick `manifest.json` in this folder.
 
-### Permanent
+### From source: permanent
 
 Regular Firefox only keeps add-ons that Mozilla has signed. Signing an **unlisted** add-on is free and automatic, and it stays private (it isn't published on addons.mozilla.org):
 

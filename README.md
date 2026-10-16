@@ -14,7 +14,7 @@
 ## What it does
 
 - **No home feed.** Recommendations, Shorts shelves and the masthead ad are hidden before the first paint, and the grid is never rendered, so thumbnails and hover previews don't load either.
-- **One search bar** with a short greeting. Start typing anywhere on the page (or press `/`) and the text goes into the box. `Enter` searches, `Esc` clears.
+- **One YouTube-style search bar** with a short greeting. Start typing anywhere on the page (or press `/`) and the text goes into the box. `Enter` searches, `Esc` clears.
 - **Three quiet links** under it: Subscriptions, Watch later, History. These are places you picked yourself.
 - **A toggle in the bottom-right corner** (`Show feed` / `Calm mode`) puts the normal home page back. Your choice is remembered and stays in sync across tabs.
 - **Toolbar button and `Alt+Shift+Y`** do the same toggle. Press either from any other page and you're taken to calm search.

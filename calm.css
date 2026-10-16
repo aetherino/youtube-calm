@@ -2,16 +2,20 @@
 
 #calmyt-overlay,
 #calmyt-toggle {
-  --calmyt-bg: #f7f5f0;
-  --calmyt-text: #2b2825;
-  --calmyt-muted: #9b958c;
-  --calmyt-faint: #c4beb4;
-  --calmyt-field: #fffefb;
-  --calmyt-border: #e6e1d8;
-  --calmyt-border-focus: #d9c3b4;
-  --calmyt-ring: rgba(201, 111, 91, 0.11);
-  --calmyt-accent: #c96f5b;
-  --calmyt-shadow: 0 1px 2px rgba(60, 45, 30, 0.04), 0 8px 28px -12px rgba(60, 45, 30, 0.12);
+  --calmyt-bg: #ffffff;
+  --calmyt-text: #0f0f0f;
+  --calmyt-muted: #606060;
+  --calmyt-faint: #909090;
+  --calmyt-field: #ffffff;
+  --calmyt-border: #d3d3d3;
+  --calmyt-border-focus: #1c62b9;
+  --calmyt-button: #f8f8f8;
+  --calmyt-button-hover: #f0f0f0;
+  --calmyt-chip: rgba(0, 0, 0, 0.05);
+  --calmyt-chip-hover: rgba(0, 0, 0, 0.1);
+  --calmyt-ring: rgba(28, 98, 185, 0.18);
+  --calmyt-accent: #ff0033;
+  --calmyt-shadow: inset 0 1px 2px #eeeeee;
   font-family: "Roboto", "Arial", system-ui, sans-serif;
 }
 
@@ -20,31 +24,39 @@
 @media (prefers-color-scheme: dark) {
   html:not([dark]):not([light]) #calmyt-overlay,
   html[data-calmyt="on"]:not([dark]):not([light]) #calmyt-toggle {
-    --calmyt-bg: #121211;
-    --calmyt-text: #e8e4dd;
-    --calmyt-muted: #7c776f;
-    --calmyt-faint: #4a4641;
-    --calmyt-field: #1b1a19;
-    --calmyt-border: #2a2826;
-    --calmyt-border-focus: #4b3d35;
-    --calmyt-ring: rgba(233, 136, 108, 0.1);
-    --calmyt-accent: #e2876d;
-    --calmyt-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+    --calmyt-bg: #0f0f0f;
+    --calmyt-text: #f1f1f1;
+    --calmyt-muted: #aaaaaa;
+    --calmyt-faint: #717171;
+    --calmyt-field: #121212;
+    --calmyt-border: #303030;
+    --calmyt-border-focus: #1c62b9;
+    --calmyt-button: #222222;
+    --calmyt-button-hover: #2a2a2a;
+    --calmyt-chip: rgba(255, 255, 255, 0.1);
+    --calmyt-chip-hover: rgba(255, 255, 255, 0.2);
+    --calmyt-ring: rgba(62, 166, 255, 0.25);
+    --calmyt-accent: #ff0033;
+    --calmyt-shadow: none;
   }
 }
 
 html[dark] #calmyt-overlay,
 html[dark] #calmyt-toggle {
-  --calmyt-bg: #121211;
-  --calmyt-text: #e8e4dd;
-  --calmyt-muted: #7c776f;
-  --calmyt-faint: #4a4641;
-  --calmyt-field: #1b1a19;
-  --calmyt-border: #2a2826;
-  --calmyt-border-focus: #4b3d35;
-  --calmyt-ring: rgba(233, 136, 108, 0.1);
-  --calmyt-accent: #e2876d;
-  --calmyt-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+  --calmyt-bg: #0f0f0f;
+  --calmyt-text: #f1f1f1;
+  --calmyt-muted: #aaaaaa;
+  --calmyt-faint: #717171;
+  --calmyt-field: #121212;
+  --calmyt-border: #303030;
+  --calmyt-border-focus: #1c62b9;
+  --calmyt-button: #222222;
+  --calmyt-button-hover: #2a2a2a;
+  --calmyt-chip: rgba(255, 255, 255, 0.1);
+  --calmyt-chip-hover: rgba(255, 255, 255, 0.2);
+  --calmyt-ring: rgba(62, 166, 255, 0.25);
+  --calmyt-accent: #ff0033;
+  --calmyt-shadow: none;
 }
 
 /* ---------- hide the feed ---------- */
@@ -106,37 +118,48 @@ html[data-calmyt="on"] #calmyt-overlay {
 }
 
 .calmyt-greeting {
-  margin: 0 0 22px;
-  font-family: "Iowan Old Style", "Charter", "Georgia", serif;
-  font-size: 22px;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  color: var(--calmyt-muted);
+  margin: 0 0 24px;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+  color: var(--calmyt-text);
   user-select: none;
 }
 
 .calmyt-field {
-  position: relative;
+  display: flex;
   width: 100%;
 }
 
-.calmyt-loupe {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  width: 18px;
-  height: 18px;
-  transform: translateY(-50%);
-  fill: none;
-  stroke: var(--calmyt-faint);
-  stroke-width: 2;
-  stroke-linecap: round;
-  pointer-events: none;
-  transition: stroke 0.2s ease;
+.calmyt-box {
+  position: relative;
+  flex: 1;
+  min-width: 0;
 }
 
-.calmyt-field:focus-within .calmyt-loupe {
-  stroke: var(--calmyt-muted);
+.calmyt-loupe {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+/* Like YouTube: a loupe appears inside the box only while it's focused. */
+.calmyt-box .calmyt-loupe {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--calmyt-text);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.calmyt-box:focus-within .calmyt-loupe {
+  opacity: 1;
 }
 
 #calmyt-q {
@@ -144,17 +167,16 @@ html[data-calmyt="on"] #calmyt-overlay {
   box-sizing: border-box;
   display: block;
   width: 100%;
-  height: 54px;
-  padding: 0 24px 0 50px;
-  border-radius: 27px;
+  height: 48px;
+  padding: 0 4px 0 20px;
+  border-radius: 24px 0 0 24px;
   border: 1px solid var(--calmyt-border);
+  border-right: none;
   background: var(--calmyt-field);
   color: var(--calmyt-text);
-  caret-color: var(--calmyt-accent);
-  font: 400 17px/54px "Roboto", "Arial", system-ui, sans-serif;
-  letter-spacing: 0.005em;
+  font: 400 17px/46px "Roboto", "Arial", system-ui, sans-serif;
   box-shadow: var(--calmyt-shadow);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.15s ease, padding 0.15s ease;
 }
 
 #calmyt-q::placeholder {
@@ -163,12 +185,45 @@ html[data-calmyt="on"] #calmyt-overlay {
 }
 
 #calmyt-q:focus {
+  padding-left: 48px;
   border-color: var(--calmyt-border-focus);
-  box-shadow: var(--calmyt-shadow), 0 0 0 4px var(--calmyt-ring);
+  border-right: 1px solid var(--calmyt-border-focus);
 }
 
 #calmyt-q::selection {
   background: var(--calmyt-ring);
+}
+
+.calmyt-submit {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 72px;
+  height: 48px;
+  border: 1px solid var(--calmyt-border);
+  border-radius: 0 24px 24px 0;
+  background: var(--calmyt-button);
+  color: var(--calmyt-text);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.calmyt-submit .calmyt-loupe {
+  width: 22px;
+  height: 22px;
+  margin-right: 2px;
+}
+
+.calmyt-submit:hover {
+  background: var(--calmyt-button-hover);
+}
+
+.calmyt-submit:focus-visible {
+  outline: 2px solid var(--calmyt-border-focus);
+  outline-offset: 2px;
 }
 
 .calmyt-hint {
@@ -199,29 +254,42 @@ html[data-calmyt="on"] #calmyt-overlay {
 .calmyt-hint kbd {
   font: inherit;
   padding: 1px 6px;
-  border: 1px solid var(--calmyt-border);
-  border-radius: 5px;
+  border-radius: 4px;
+  background: var(--calmyt-chip);
   color: var(--calmyt-muted);
 }
 
 .calmyt-links {
   display: flex;
-  gap: 22px;
-  margin-top: 30px;
-  font-size: 12.5px;
-  letter-spacing: 0.02em;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
 }
 
+/* YouTube's filter chips */
 .calmyt-links a {
-  color: var(--calmyt-faint);
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: var(--calmyt-chip);
+  color: var(--calmyt-text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: background 0.15s ease;
 }
 
-.calmyt-links a:hover,
+.calmyt-links a:hover {
+  background: var(--calmyt-chip-hover);
+}
+
 .calmyt-links a:focus-visible {
-  color: var(--calmyt-text);
-  outline: none;
+  outline: 2px solid var(--calmyt-border-focus);
+  outline-offset: 2px;
 }
 
 /* ---------- toggle ---------- */
@@ -235,19 +303,18 @@ html[data-calmyt="on"] #calmyt-overlay {
   align-items: center;
   gap: 8px;
   margin: 0;
-  padding: 7px 13px 7px 11px;
-  border: 1px solid var(--calmyt-border);
-  border-radius: 999px;
-  background: var(--calmyt-field);
-  color: var(--calmyt-muted);
-  font-size: 12px;
+  height: 36px;
+  padding: 0 16px 0 14px;
+  border: none;
+  border-radius: 18px;
+  background: var(--calmyt-chip);
+  color: var(--calmyt-text);
+  font-size: 14px;
   font-weight: 500;
-  letter-spacing: 0.02em;
-  line-height: 1;
+  line-height: 36px;
   cursor: pointer;
-  opacity: 0.55;
-  box-shadow: var(--calmyt-shadow);
-  transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, background 0.15s ease;
 }
 
 html[data-calmyt] #calmyt-toggle {
@@ -257,14 +324,13 @@ html[data-calmyt] #calmyt-toggle {
 #calmyt-toggle:hover,
 #calmyt-toggle:focus-visible {
   opacity: 1;
-  color: var(--calmyt-text);
-  border-color: var(--calmyt-border-focus);
+  background: var(--calmyt-chip-hover);
   outline: none;
 }
 
 .calmyt-toggle-dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   border: 1.5px solid var(--calmyt-accent);
   box-sizing: border-box;

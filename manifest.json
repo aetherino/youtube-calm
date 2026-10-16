@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Calm YouTube",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Replaces the YouTube home feed with a quiet, minimal search bar. Toggle back anytime.",
   "icons": { "48": "icons/icon.svg", "96": "icons/icon.svg" },
   "browser_specific_settings": {
